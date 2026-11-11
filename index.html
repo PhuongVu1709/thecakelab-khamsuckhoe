@@ -147,7 +147,7 @@ var CONFIG = {
   doiTuongMacDinh: 'Người lao động',
   nguonKinhPhi:        ['Công ty chi trả', 'Tự chi trả'],
   nguonKinhPhiMacDinh: 'Công ty chi trả',
-  ngayKhamMacDinh: ''   // vd '2026-11-20' để điền sẵn ngày khám
+  ngayKham: ['Chiều 16/11/2026', 'Chiều 17/11/2026', 'Không thể khám cả 2 ngày']
 };
 
 var TINH = ['Hà Nội','TP. Hồ Chí Minh','Hải Phòng','Đà Nẵng','Cần Thơ','Huế',
@@ -192,7 +192,7 @@ var F = [
   {k:'lyDo', t:'Lý do khám sức khỏe', type:'chips', req:1, opts:CONFIG.lyDo, other:1, def:CONFIG.lyDoMacDinh},
   {k:'doiTuong', t:'Đối tượng', type:'chips', req:1, opts:CONFIG.doiTuong, other:1, def:CONFIG.doiTuongMacDinh},
   {k:'nguonKinhPhi', t:'Nguồn kinh phí khám', type:'chips', req:1, opts:CONFIG.nguonKinhPhi, other:1, def:CONFIG.nguonKinhPhiMacDinh},
-  {k:'ngayKham', t:'Ngày khám sức khỏe', type:'date', def:CONFIG.ngayKhamMacDinh, hint:'Để trống nếu chưa có lịch'},
+  {k:'ngayKham', t:'Ngày khám sức khỏe', type:'chips', req:1, opts:CONFIG.ngayKham},
   {k:'honNhan', t:'Tình trạng kết hôn', type:'chips', req:1, opts:['Độc thân','Đã kết hôn','Ly hôn','Góa']},
   {k:'chucVu', t:'Chức vụ', type:'text', req:1, ph:'VD: Nhân viên'},
   {k:'phongBan', t:'Phòng ban', type:'select', req:1, list:PHONGBAN, ph:'– Chọn phòng ban –'},
@@ -217,7 +217,7 @@ function render(){
     n++;
     h+='<div class="f" id="f_'+f.k+'"><label class="l" for="i_'+f.k+'"><span class="n">'+n+'.</span>'+esc(f.t)+(f.req?' <span class="r">*</span>':'')+'</label>';
     if(f.type==='chips'){
-      var longOpt=f.opts.some(function(o){return o.length>16;});
+      var longOpt=f.k==='ngayKham'||f.opts.some(function(o){return o.length>16;});
       h+='<div class="chips'+(longOpt?' wide':'')+'" data-k="'+f.k+'">';
       f.opts.forEach(function(o){h+='<button type="button" class="chip" data-v="'+esc(o)+'">'+esc(o)+'</button>';});
       if(f.other)h+='<button type="button" class="chip" data-v="__other">Khác</button>';
